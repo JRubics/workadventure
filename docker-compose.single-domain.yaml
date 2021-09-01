@@ -6,7 +6,7 @@ services:
       - --api.insecure=true
       - --providers.docker
       - --entryPoints.web.address=:80
-      - --entryPoints.websecure.address=:443
+      # - --entryPoints.websecure.address=:443
     ports:
       - "8016:80"
       # - "443:443"
@@ -77,6 +77,7 @@ services:
       - "traefik.http.routers.pusher.rule=PathPrefix(`/pusher`)"
       - "traefik.http.routers.pusher.middlewares=strip-pusher-prefix@docker"
       - "traefik.http.routers.pusher.entryPoints=web"
+      - "traefik.http.routers.pusher.service=pusher"
       - "traefik.http.services.pusher.loadbalancer.server.port=8080"
       # - "traefik.http.routers.pusher-ssl.rule=PathPrefix(`/pusher`)"
       # - "traefik.http.routers.pusher-ssl.middlewares=strip-pusher-prefix@docker"
@@ -161,18 +162,18 @@ services:
       # - "traefik.http.routers.uploader-ssl.tls=true"
       # - "traefik.http.routers.uploader-ssl.service=uploader"
 
-  messages:
-    #image: thecodingmachine/nodejs:14
-    image: thecodingmachine/workadventure-back-base:latest
-    environment:
-      #STARTUP_COMMAND_0: sudo apt-get install -y inotify-tools
-      STARTUP_COMMAND_1: yarn install
-      STARTUP_COMMAND_2: yarn run proto:watch
-    volumes:
-      - ./messages:/usr/src/app
-      - ./back:/usr/src/back
-      - ./front:/usr/src/front
-      - ./pusher:/usr/src/pusher
+  # messages:
+  #   #image: thecodingmachine/nodejs:14
+  #   image: thecodingmachine/workadventure-back-base:latest
+  #   environment:
+  #     #STARTUP_COMMAND_0: sudo apt-get install -y inotify-tools
+  #     STARTUP_COMMAND_1: yarn install
+  #     STARTUP_COMMAND_2: yarn run proto:watch
+  #   volumes:
+  #     - ./messages:/usr/src/app
+  #     - ./back:/usr/src/back
+  #     - ./front:/usr/src/front
+  #     - ./pusher:/usr/src/pusher
 
   redis:
     image: redis:6
