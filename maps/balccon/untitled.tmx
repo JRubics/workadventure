@@ -278,7 +278,7 @@
   <object id="12" x="80.2813" y="613.833" width="138.771" height="19">
    <text fontfamily="Open Sans" wrap="1" color="#ffffff" bold="1">Retro computers</text>
   </object>
-  <object id="15" x="2910.5" y="808.031" width="71.4375" height="26.9969" rotation="88.405">
+  <object id="15" x="2911.3" y="808.317" width="71.4375" height="26.9969" rotation="89.6765">
    <text fontfamily="Open Sans" wrap="1" color="#ffffff" bold="1">Lounge</text>
   </object>
  </objectgroup>
