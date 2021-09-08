@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.0" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="1">
+<map version="1.5" tiledversion="1.7.0" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="17">
  <editorsettings>
   <export target="balccon.json" format="json"/>
  </editorsettings>
@@ -268,4 +268,18 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
+ <objectgroup id="9" name="text">
+  <object id="9" x="1898.61" y="611.5" width="45.1042" height="23">
+   <text fontfamily="Open Sans Condensed" wrap="1" color="#ffffff" bold="1">PUPIN</text>
+  </object>
+  <object id="10" x="2535.28" y="611.5" width="50.4375" height="19">
+   <text fontfamily="Open Sans" wrap="1" color="#ffffff" bold="1">TESLA</text>
+  </object>
+  <object id="12" x="80.2813" y="613.833" width="138.771" height="19">
+   <text fontfamily="Open Sans" wrap="1" color="#ffffff" bold="1">Retro computers</text>
+  </object>
+  <object id="15" x="2910.5" y="808.031" width="71.4375" height="26.9969" rotation="88.405">
+   <text fontfamily="Open Sans" wrap="1" color="#ffffff" bold="1">Lounge</text>
+  </object>
+ </objectgroup>
 </map>

@@ -87,9 +87,96 @@
          "width":100,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":9,
+         "name":"text",
+         "objects":[
+                {
+                 "height":22.9999999999999,
+                 "id":9,
+                 "name":"",
+                 "rotation":0,
+                 "text":
+                    {
+                     "bold":true,
+                     "color":"#ffffff",
+                     "fontfamily":"Open Sans Condensed",
+                     "text":"PUPIN",
+                     "wrap":true
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":45.1041666666667,
+                 "x":1898.61458333333,
+                 "y":611.5
+                }, 
+                {
+                 "height":19,
+                 "id":10,
+                 "name":"",
+                 "rotation":0,
+                 "text":
+                    {
+                     "bold":true,
+                     "color":"#ffffff",
+                     "fontfamily":"Open Sans",
+                     "text":"TESLA",
+                     "wrap":true
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":50.4375,
+                 "x":2535.28125,
+                 "y":611.5
+                }, 
+                {
+                 "height":19,
+                 "id":12,
+                 "name":"",
+                 "rotation":0,
+                 "text":
+                    {
+                     "bold":true,
+                     "color":"#ffffff",
+                     "fontfamily":"Open Sans",
+                     "text":"Retro computers",
+                     "wrap":true
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":138.770833333333,
+                 "x":80.28125,
+                 "y":613.833333333333
+                }, 
+                {
+                 "height":26.9969002430653,
+                 "id":15,
+                 "name":"",
+                 "rotation":88.4049640318882,
+                 "text":
+                    {
+                     "bold":true,
+                     "color":"#ffffff",
+                     "fontfamily":"Open Sans",
+                     "text":"Lounge",
+                     "wrap":true
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":71.4375,
+                 "x":2910.50208642876,
+                 "y":808.030657110251
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
         }],
- "nextlayerid":8,
- "nextobjectid":1,
+ "nextlayerid":10,
+ "nextobjectid":17,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.7.0",
