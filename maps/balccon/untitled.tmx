@@ -270,7 +270,7 @@
  </layer>
  <objectgroup id="9" name="text">
   <object id="9" x="1898.61" y="611.5" width="45.1042" height="23">
-   <text fontfamily="Open Sans Condensed" wrap="1" color="#ffffff" bold="1">PUPIN</text>
+   <text fontfamily="Open Sans" wrap="1" color="#ffffff" bold="1">PUPIN</text>
   </object>
   <object id="10" x="2535.28" y="611.5" width="50.4375" height="19">
    <text fontfamily="Open Sans" wrap="1" color="#ffffff" bold="1">TESLA</text>
