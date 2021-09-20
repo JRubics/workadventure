@@ -1,7 +1,8 @@
 version: "3.3"
 services:
-  reverse-proxy:
+  traefik:
     image: traefik:v2.3
+    restart: unless-stopped
     command:
       - --log.level=WARN
       #- --api.insecure=true
@@ -11,9 +12,9 @@ services:
       - --entrypoints.web.http.redirections.entryPoint.scheme=https
       - --entryPoints.websecure.address=:443
       - --certificatesresolvers.myresolver.acme.email=${ACME_EMAIL}
-      - --certificatesresolvers.myresolver.acme.storage=/acme.json
-      # used during the challenge
+      - --certificatesresolvers.myresolver.acme.storage=/traefik-config/acme.json
       - --certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web
+      - --providers.file.directory=/traefik-config
     ports:
       - "80:80"
       - "443:443"
@@ -23,78 +24,105 @@ services:
       - pusher
       - front
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./acme.json:/acme.json
-    restart: unless-stopped
-
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik-config:/traefik-config
 
   front:
-    build:
-      context: ../..
-      dockerfile: front/Dockerfile
-    #image: thecodingmachine/workadventure-front:master
+    #build:
+    #  context: ../..
+    #  dockerfile: front/Dockerfile
+    image: thecodingmachine/workadventure-front:master
+    restart: unless-stopped
     environment:
       DEBUG_MODE: "$DEBUG_MODE"
       JITSI_URL: $JITSI_URL
       JITSI_PRIVATE_MODE: "$JITSI_PRIVATE_MODE"
       PUSHER_URL: //pusher.${DOMAIN}
-      TURN_SERVER: "${TURN_SERVER}"
-      TURN_USER: "${TURN_USER}"
-      TURN_PASSWORD: "${TURN_PASSWORD}"
+      ADMIN_URL: //workadventure.localhost
+      #TURN_SERVER: "${TURN_SERVER}"
+      #TURN_USER: "${TURN_USER}"
+      #TURN_PASSWORD: "${TURN_PASSWORD}"
       START_ROOM_URL: "${START_ROOM_URL}"
     labels:
-      - "traefik.http.routers.front.rule=Host(`play.${DOMAIN}`)"
-      - "traefik.http.routers.front.entryPoints=web,traefik"
       - "traefik.http.services.front.loadbalancer.server.port=80"
+      - "traefik.http.routers.front.rule=Host(`play.${DOMAIN}`)"
+      - "traefik.http.routers.front.entryPoints=web"
       - "traefik.http.routers.front-ssl.rule=Host(`play.${DOMAIN}`)"
       - "traefik.http.routers.front-ssl.entryPoints=websecure"
-      - "traefik.http.routers.front-ssl.tls=true"
       - "traefik.http.routers.front-ssl.service=front"
+      - "traefik.http.routers.front-ssl.tls=true"
       - "traefik.http.routers.front-ssl.tls.certresolver=myresolver"
-    restart: unless-stopped
 
   pusher:
-    build:
-      context: ../..
-      dockerfile: pusher/Dockerfile
-    #image: thecodingmachine/workadventure-pusher:master
+    #build:
+    #  context: ../..
+    #  dockerfile: pusher/Dockerfile
+    image: thecodingmachine/workadventure-pusher:master
+    restart: unless-stopped
     command: yarn run runprod
     environment:
       SECRET_JITSI_KEY: "$SECRET_JITSI_KEY"
-      SECRET_KEY: yourSecretKey
+      SECRET_KEY: "$PUSHER_SECRET_KEY"
+      ADMIN_API_TOKEN: "$ADMIN_API_TOKEN"
       API_URL: back:50051
       JITSI_URL: $JITSI_URL
       JITSI_ISS: $JITSI_ISS
     labels:
-      - "traefik.http.routers.pusher.rule=Host(`pusher.${DOMAIN}`)"
-      - "traefik.http.routers.pusher.entryPoints=web,traefik"
       - "traefik.http.services.pusher.loadbalancer.server.port=8080"
+      - "traefik.http.routers.pusher.rule=Host(`pusher.${DOMAIN}`)"
+      - "traefik.http.routers.pusher.entryPoints=web"
       - "traefik.http.routers.pusher-ssl.rule=Host(`pusher.${DOMAIN}`)"
       - "traefik.http.routers.pusher-ssl.entryPoints=websecure"
-      - "traefik.http.routers.pusher-ssl.tls=true"
       - "traefik.http.routers.pusher-ssl.service=pusher"
+      - "traefik.http.routers.pusher-ssl.tls=true"
       - "traefik.http.routers.pusher-ssl.tls.certresolver=myresolver"
-    restart: unless-stopped
 
   back:
-    build:
-      context: ../..
-      dockerfile: back/Dockerfile
-    #image: thecodingmachine/workadventure-back:master
+    #build:
+    #  context: ../..
+    #  dockerfile: back/Dockerfile
+    image: thecodingmachine/workadventure-back:master
+    restart: unless-stopped
     command: yarn run runprod
     environment:
       SECRET_JITSI_KEY: "$SECRET_JITSI_KEY"
       ADMIN_API_TOKEN: "$ADMIN_API_TOKEN"
-      ADMIN_API_URL: "$ADMIN_API_URL"
+      #ADMIN_API_URL: "$ADMIN_API_URL"
       JITSI_URL: $JITSI_URL
       JITSI_ISS: $JITSI_ISS
     labels:
+      - "traefik.http.services.back.loadbalancer.server.port=8080"
       - "traefik.http.routers.back.rule=Host(`api.${DOMAIN}`)"
       - "traefik.http.routers.back.entryPoints=web"
-      - "traefik.http.services.back.loadbalancer.server.port=8080"
       - "traefik.http.routers.back-ssl.rule=Host(`api.${DOMAIN}`)"
       - "traefik.http.routers.back-ssl.entryPoints=websecure"
-      - "traefik.http.routers.back-ssl.tls=true"
       - "traefik.http.routers.back-ssl.service=back"
+      - "traefik.http.routers.back-ssl.tls=true"
       - "traefik.http.routers.back-ssl.tls.certresolver=myresolver"
+
+  maps-build:
+    image: node:12-slim
+    restart: "no"
+    environment:
+      NODE_ENV: production
+    working_dir: /usr/src
+    command: "bash -c 'yarn && yarn prod'"
+    volumes:
+      - ../../maps:/usr/src
+
+  maps:
+    image: nginx:alpine
     restart: unless-stopped
+    volumes:
+      - ../../maps:/maps
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+    labels:
+      - "traefik.http.services.maps.loadbalancer.server.port=80"
+      - "traefik.http.routers.maps.rule=Host(`maps.${DOMAIN}`)"
+      - "traefik.http.routers.maps.entryPoints=web"
+      - "traefik.http.routers.maps-ssl.rule=Host(`maps.${DOMAIN}`)"
+      - "traefik.http.routers.maps-ssl.entryPoints=websecure"
+      - "traefik.http.routers.maps-ssl.service=maps"
+      - "traefik.http.routers.maps-ssl.tls=true"
+      - "traefik.http.routers.maps-ssl.tls.certresolver=myresolver"

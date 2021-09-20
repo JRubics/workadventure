@@ -1,0 +1,19 @@
+[http.routers]
+  [http.routers.root-ssl]
+    rule = "Host(`wa.balccon.org`)"
+    entryPoints = ["websecure"]
+    middlewares = ["play-redirect"]
+    service = "noop"
+    [http.routers.root-ssl.tls]
+      certresolver = "myresolver"
+
+[http.middlewares]
+  [http.middlewares.play-redirect.redirectregex]
+    regex = "^https?://wa.balccon.org"
+    replacement = "https://play.wa.balccon.org"
+    permanent = true
+
+[http.services]
+  [http.services.noop.LoadBalancer]
+     [[http.services.noop.LoadBalancer.servers]]
+        url = ""
