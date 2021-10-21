@@ -172,15 +172,83 @@
                  "width":71.4375,
                  "x":2911.29968966676,
                  "y":808.316912824761
+                }, 
+                {
+                 "height":19,
+                 "id":17,
+                 "name":"",
+                 "rotation":0,
+                 "text":
+                    {
+                     "color":"#ffffff",
+                     "text":"Lighting talks Sat 20-22",
+                     "wrap":true
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":221.44,
+                 "x":2455.12,
+                 "y":631.576375148397
+                }, 
+                {
+                 "height":19,
+                 "id":18,
+                 "name":"",
+                 "rotation":0,
+                 "text":
+                    {
+                     "color":"#ffffff",
+                     "text":"meet.hacke.rs\/balccon",
+                     "wrap":true
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":191.44,
+                 "x":2470.59,
+                 "y":651.362683023348
+                }, 
+                {
+                 "height":19,
+                 "id":22,
+                 "name":"",
+                 "rotation":0,
+                 "text":
+                    {
+                     "color":"#ffffff",
+                     "text":"Rakia leaks Sat @22",
+                     "wrap":true
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":170.44,
+                 "x":2800.1,
+                 "y":623.661851998417
+                }, 
+                {
+                 "height":19,
+                 "id":26,
+                 "name":"",
+                 "rotation":0,
+                 "text":
+                    {
+                     "color":"#ffffff",
+                     "text":"meet.hacke.rs\/balccon",
+                     "wrap":true
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":191.44,
+                 "x":2790.31871207624,
+                 "y":646.086334256694
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }],
  "nextlayerid":11,
- "nextobjectid":17,
+ "nextobjectid":28,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.7.2",
